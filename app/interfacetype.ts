@@ -5,7 +5,7 @@ export interface User {
 
 export type CounterProps = { users: User[] };
 
-export type Cabin = {
+export type CabinType = {
   id?: number;
   name: string;
   maxCapacity?: number;
