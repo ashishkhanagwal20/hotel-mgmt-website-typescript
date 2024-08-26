@@ -6,12 +6,13 @@ export interface User {
 export type CounterProps = { users: User[] };
 
 export type CabinType = {
-  id?: number;
+  id: number | string;
   name: string;
-  maxCapacity?: number;
+  maxCapacity: number;
   regularPrice: number;
   discount: number;
   image: string;
+  description: string;
 };
 
 export type BookingType = {

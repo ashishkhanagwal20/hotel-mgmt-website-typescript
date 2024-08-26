@@ -1,6 +1,19 @@
-import { getCabin, getCabins } from "@/app/_lib/data-service";
+import Cabin from "@/app/_components/Cabin";
+import DateSelector from "@/app/_components/DateSelector";
+import Reservation from "@/app/_components/Reservation";
+import ReservationForm from "@/app/_components/ReservationForm";
+import ReservationReminder from "@/app/_components/ReservationReminder";
+import Spinner from "@/app/_components/Spinner";
+import TextExpander from "@/app/_components/TextExpander";
+import {
+  getBookedDatesByCabinId,
+  getCabin,
+  getCabins,
+  getSettings,
+} from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { Suspense } from "react";
 
 // export const metadata = {
 //     title: "Cabin",
@@ -27,12 +40,16 @@ export default async function Page({
   params: { cabinId: string };
 }) {
   const cabin = await getCabin(Number(params.cabinId));
-  const { id, name, maxCapacity, regularPrice, discount, image, description } =
-    cabin;
-  console.log(params);
+  // const settings = await getSettings();
+  // const bookedDates = await getBookedDatesByCabinId(params.cabinId);
+
+  // const { id, name, maxCapacity, regularPrice, discount, image, description } =
+  //   cabin;
+
   return (
     <div className="max-w-6xl mx-auto mt-8">
-      <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
+      <Cabin cabin={cabin} />
+      {/* <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
         <div className="relative scale-[1.15] -translate-x-3">
           <Image
             fill
@@ -47,7 +64,10 @@ export default async function Page({
             Cabin {name}
           </h3>
 
-          <p className="text-lg text-primary-300 mb-10">{description}</p>
+          <p className="text-lg text-primary-300 mb-10">
+            {" "}
+            <TextExpander>{description}</TextExpander>
+          </p>
 
           <ul className="flex flex-col gap-4 mb-7">
             <li className="flex gap-3 items-center">
@@ -72,12 +92,16 @@ export default async function Page({
             </li>
           </ul>
         </div>
-      </div>
+      </div> */}
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+        <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
+          Reserve Cabin {cabin.name} today. Pay on arrival.
         </h2>
+        <Suspense fallback={<Spinner />}>
+          <Reservation cabin={cabin} />
+          <ReservationReminder />
+        </Suspense>
       </div>
     </div>
   );

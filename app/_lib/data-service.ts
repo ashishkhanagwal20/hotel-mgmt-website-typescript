@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 /////////////
 // GET
 
-export async function getCabin(id: number) {
+export async function getCabin(id: number | string) {
   const { data, error } = await supabase
     .from("cabins")
     .select("*")
@@ -95,7 +95,7 @@ export async function getBookings(guestId: number) {
   return data;
 }
 
-export async function getBookedDatesByCabinId(cabinId: number) {
+export async function getBookedDatesByCabinId(cabinId: number | string) {
   let todayDate = new Date();
   todayDate.setUTCHours(0, 0, 0, 0);
   let today: string = todayDate.toISOString();
