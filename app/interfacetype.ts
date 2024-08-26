@@ -39,3 +39,15 @@ export type SelectCountryType2 = {
   name: string;
   flag: string;
 };
+
+export type SessionUserType = {
+  name: string | null;
+  guestId?: string;
+  image: string;
+  email: string;
+};
+export type SessionType = {
+  user: SessionUserType;
+
+  expires: string;
+};

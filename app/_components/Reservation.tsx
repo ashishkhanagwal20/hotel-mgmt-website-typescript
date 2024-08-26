@@ -7,12 +7,16 @@ import {
   getSettings,
 } from "../_lib/data-service";
 import { CabinType } from "../interfacetype";
+import { auth } from "../_lib/auth";
+import LoginMessage from "./LoginMessage";
+import { SessionType } from "../interfacetype";
 
 export default async function Reservation({ cabin }: { cabin: CabinType }) {
   const [settings, bookedDates] = await Promise.all([
     getSettings(),
     getBookedDatesByCabinId(cabin.id),
   ]);
+  const session = await auth();
   return (
     <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
       <DateSelector
@@ -20,7 +24,11 @@ export default async function Reservation({ cabin }: { cabin: CabinType }) {
         bookedDates={bookedDates}
         cabin={cabin}
       />
-      <ReservationForm cabin={cabin} />
+      {session?.user ? (
+        <ReservationForm cabin={cabin} user={session.user} />
+      ) : (
+        <LoginMessage />
+      )}
     </div>
   );
 }
