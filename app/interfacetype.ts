@@ -23,11 +23,27 @@ export type BookingType = {
   numNights: number;
   totalPrice: number;
   numGuests: number;
-  status: boolean;
+  status?: boolean;
   created_at: string;
   cabins: { name: string; image: string };
 };
 
+export type BookingType2 = {
+  id: number;
+  created_at: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  numGuests: number;
+  totalPrice: number;
+  guestId: number;
+  cabinId: number;
+  status?: string;
+  cabins: {
+    name: string;
+    image: string;
+  };
+};
 export type SelectCountryType = {
   defaultCountry: string;
   name: string;
@@ -42,7 +58,7 @@ export type SelectCountryType2 = {
 
 export type SessionUserType = {
   name: string | null;
-  guestId?: string;
+  guestId: string;
   image: string;
   email: string;
 };

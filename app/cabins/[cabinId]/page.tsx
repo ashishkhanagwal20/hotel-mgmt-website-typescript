@@ -1,19 +1,19 @@
-import Cabin from "@/app/_components/Cabin";
-import DateSelector from "@/app/_components/DateSelector";
-import Reservation from "@/app/_components/Reservation";
-import ReservationForm from "@/app/_components/ReservationForm";
-import ReservationReminder from "@/app/_components/ReservationReminder";
-import Spinner from "@/app/_components/Spinner";
-import TextExpander from "@/app/_components/TextExpander";
+import Cabin from '@/app/_components/Cabin';
+import DateSelector from '@/app/_components/DateSelector';
+import Reservation from '@/app/_components/Reservation';
+import ReservationForm from '@/app/_components/ReservationForm';
+import ReservationReminder from '@/app/_components/ReservationReminder';
+import Spinner from '@/app/_components/Spinner';
+import TextExpander from '@/app/_components/TextExpander';
 import {
   getBookedDatesByCabinId,
   getCabin,
   getCabins,
   getSettings,
-} from "@/app/_lib/data-service";
-import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
-import { Suspense } from "react";
+} from '@/app/_lib/data-service';
+import { EyeSlashIcon, MapPinIcon, UsersIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image';
+import { Suspense } from 'react';
 
 // export const metadata = {
 //     title: "Cabin",
@@ -100,7 +100,7 @@ export default async function Page({
         </h2>
         <Suspense fallback={<Spinner />}>
           <Reservation cabin={cabin} />
-          <ReservationReminder />
+          {/* <ReservationReminder /> */}
         </Suspense>
       </div>
     </div>
