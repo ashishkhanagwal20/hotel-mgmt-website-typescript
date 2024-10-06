@@ -1,25 +1,25 @@
-import { getCabins } from "../_lib/data-service";
-import { CabinType } from "../interfacetype";
-import CabinCard from "./CabinCard";
-import { unstable_noStore as noStore } from "next/cache";
+import { getCabins } from '../_lib/data-service';
+import { CabinType } from '../interfacetype';
+import CabinCard from './CabinCard';
+import { unstable_noStore as noStore } from 'next/cache';
 export default async function CabinList({ filter }: { filter: string }) {
   // noStore();
-  const cabins: CabinType[] = await getCabins();
+  const cabins: any[] = await getCabins();
 
   if (!cabins.length) return null;
   let displayedCabins: CabinType[] = [];
-  if (filter === "all") {
+  if (filter === 'all') {
     displayedCabins = cabins;
   }
-  if (filter === "small") {
+  if (filter === 'small') {
     displayedCabins = cabins.filter((cabin) => cabin?.maxCapacity <= 3);
   }
-  if (filter === "medium") {
+  if (filter === 'medium') {
     displayedCabins = cabins.filter(
       (cabin) => cabin?.maxCapacity >= 4 && cabin?.maxCapacity <= 7
     );
   }
-  if (filter === "large") {
+  if (filter === 'large') {
     displayedCabins = cabins.filter((cabin) => cabin?.maxCapacity >= 8);
   }
   return (
