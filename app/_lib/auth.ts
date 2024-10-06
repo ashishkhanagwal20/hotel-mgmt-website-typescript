@@ -1,9 +1,11 @@
-import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
-import { SessionType, SessionUserType } from "../interfacetype";
-import { createGuest, getGuest } from "./data-service";
-import { User } from "next-auth";
+import NextAuth, { User } from 'next-auth';
+import Google from 'next-auth/providers/google';
+import { SessionType, SessionUserType } from '../interfacetype';
+import { createGuest, getGuest } from './data-service';
 
+interface CustomUser extends User {
+  guestId: string;
+}
 const authConfig: any = {
   providers: [
     Google({
@@ -15,15 +17,7 @@ const authConfig: any = {
     authorized({ auth, request }: { auth: any; request: any }) {
       return !!auth?.user;
     },
-    async signIn({
-      user,
-      account,
-      profile,
-    }: {
-      user: User;
-      account: any;
-      profile: any;
-    }) {
+    async signIn({ user }: { user: CustomUser }) {
       try {
         const existingGuest = await getGuest(user.email!);
         if (!existingGuest)
@@ -33,13 +27,19 @@ const authConfig: any = {
         return false;
       }
     },
-    async session({ session, user }: { session: SessionType; user: any }) {
+    async session({
+      session,
+      user,
+    }: {
+      session: SessionType;
+      user: CustomUser;
+    }) {
       const guest = await getGuest(session.user.email);
-      session.user.guestId = guest.id;
+      session.user.guestId = guest?.id;
       return session;
     },
     pages: {
-      signIn: "/login",
+      signIn: '/login',
     },
   },
 };
